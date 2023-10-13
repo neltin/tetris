@@ -11,6 +11,9 @@ const PIECES = [
   [[0, 1, 1], [1, 1, 0]]  // S piece
 ];
 
+const color =  ["red", "yellow", "violet", "green", "cyan", "orange", "purple"];
+
+
 //SCORE
 let SCORE = 0;
 const span = document.getElementById("score");
@@ -34,6 +37,7 @@ context.scale(BLOCK_SIZE, BLOCK_SIZE);
 const piece = {
   position: {x: Math.floor(BOARD_WIDTH / 2 - 2) , y: 0},
   shape: PIECES[Math.floor(Math.random() * PIECES.length)],
+  color: color[Math.floor(Math.random() * color.length)],
 };
 
 //Mapa del juego
@@ -45,7 +49,6 @@ function createBoard(w, h){
 
 let dropCounter = 0;
 let lastTime = 0;
-
 
 // Add a variable to store the initial drop interval
 let initialDropInterval = 900;
@@ -110,11 +113,11 @@ const draw = () =>{
     });
   });
 
-  //Dibujo de mapa
+  //Dibujo de pieza
   piece.shape.forEach((row, y) =>{
     row.forEach((value, x) =>{
       if(value){
-        context.fillStyle = "red";
+        context.fillStyle = piece.color;
         context.fillRect(x + piece.position.x, y + piece.position.y, 1, 1);
       }
     });
@@ -205,6 +208,8 @@ const solidifyPiece = () =>{
   })
 
   piece.shape = PIECES[Math.floor(Math.random() * PIECES.length)];
+  piece.color = color[Math.floor(Math.random() * color.length)];
+
 
   piece.position.x= Math.floor(BOARD_WIDTH / 2 - 2);
   piece.position.y= 0;
